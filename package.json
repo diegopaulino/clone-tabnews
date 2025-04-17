@@ -4,6 +4,7 @@
   "description": "Criação de projeto para praticar aplicar conceitos de front-end e back-end, integrações, versionament, banco de dados, CI/CD, publicação, etc...",
   "main": "index.js",
   "scripts": {
+    "dev": "next dev",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
