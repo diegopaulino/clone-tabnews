@@ -4,7 +4,10 @@
   "description": "Criação de projeto para praticar aplicar conceitos de front-end e back-end, integrações, versionament, banco de dados, CI/CD, publicação, etc...",
   "main": "index.js",
   "scripts": {
-    "dev": "next dev",
+    "dev": "npm run services:up && next dev",
+    "services:up": "docker compose -f infra/compose.yaml up -d",
+    "services:stop": "docker compose -f infra/compose.yaml stop",
+    "services:down": "docker compose -f infra/compose.yaml down",
     "lint:check": "prettier --check .",
     "lint:fix": "prettier --write .",
     "test": "jest",
