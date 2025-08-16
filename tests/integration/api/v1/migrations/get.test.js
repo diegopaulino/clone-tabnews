@@ -1,11 +1,9 @@
 import database from "infra/database.js";
-
-const cleanDatabase = async () => {
-  await database.query("DROP SCHEMA public cascade; CREATE SCHEMA public;");
-};
+import orchestrator from "tests/orchestrator";
 
 beforeAll(async () => {
-  await cleanDatabase();
+  await orchestrator.waitForAllServices();
+  await database.query("DROP SCHEMA public cascade; CREATE SCHEMA public;");
 });
 
 test("GET to /api/v1/migrations should return 200", async () => {
