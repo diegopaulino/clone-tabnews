@@ -19,6 +19,7 @@ function UpdatedAt() {
     refreshInterval: 2000,
   });
 
+  const loadingText = "Carregando...";
   let updatedAtText = "Carregando...";
 
   if (!isLoading && data) {
@@ -27,12 +28,19 @@ function UpdatedAt() {
 
   return (
     <>
-      <div>VERSÃO DB: {data?.dependencies.database.version}</div>
       <div>
-        CONEXÕES ABERTAS: {data?.dependencies.database.opened_connections}
+        VERSÃO DB:
+        {isLoading ? loadingText : data?.dependencies.database.version}
       </div>
       <div>
-        LIMITE DE CONEXÕES: {data?.dependencies.database.max_connections}
+        CONEXÕES ABERTAS:{" "}
+        {isLoading
+          ? loadingText
+          : data?.dependencies.database.opened_connections}
+      </div>
+      <div>
+        LIMITE DE CONEXÕES:{" "}
+        {isLoading ? loadingText : data?.dependencies.database.max_connections}
       </div>
       <div>ÚLTIMA ATUALIZAÇÃO: {updatedAtText}</div>
     </>
