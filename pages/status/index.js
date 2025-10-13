@@ -9,12 +9,12 @@ export default function StatusPage() {
   return (
     <>
       <h1>Status</h1>
-      <UpdatedAt />
+      <DataBaseStatus />
     </>
   );
 }
 
-function UpdatedAt() {
+function DataBaseStatus() {
   const { data, isLoading } = useSwr("/api/v1/status", fetchAPI, {
     refreshInterval: 2000,
   });
