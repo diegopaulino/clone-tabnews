@@ -1,8 +1,14 @@
 import bcryptjs from "bcryptjs";
 
+const pepper =
+  process.env.NODE_ENV === "production"
+    ? process.env.PEPPER_SECRET
+    : "peppersecret";
+
 async function hash(password) {
   const rounds = getNumbersOfRounds();
-  return await bcryptjs.hash(password, rounds);
+  const passwordWithPepper = password + pepper;
+  return await bcryptjs.hash(passwordWithPepper, rounds);
 }
 
 function getNumbersOfRounds() {
