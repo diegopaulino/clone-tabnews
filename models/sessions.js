@@ -6,10 +6,9 @@ const EXPIRATION_IN_MILLISECONDS = 60 * 60 * 24 * 30 * 1000; // 30 days
 
 async function findOneValidByToken(sessionToken) {
   const sessionFound = await runSelectQuery(sessionToken);
-
   return sessionFound;
 
-  async function runSelectQuery() {
+  async function runSelectQuery(sessionToken) {
     const results = await database.query({
       text: `
         SELECT
@@ -86,10 +85,35 @@ async function renew(sessionId) {
   }
 }
 
+async function expireById(sessionId) {
+  const expiredSessionObject = await runUpadateQuery(sessionId);
+  return expiredSessionObject;
+
+  async function runUpadateQuery(sessionId) {
+    const results = await database.query({
+      text: `
+        UPDATE
+          sessions
+        SET
+          expires_at = expires_at - interval '1 year',
+          updated_at = NOW()
+        WHERE
+          id = $1
+        RETURNING
+          *
+        ;`,
+      values: [sessionId],
+    });
+
+    return results.rows[0];
+  }
+}
+
 const session = {
   create,
   findOneValidByToken,
   renew,
+  expireById,
   EXPIRATION_IN_MILLISECONDS,
 };
 
