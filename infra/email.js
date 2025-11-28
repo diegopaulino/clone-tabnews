@@ -10,8 +10,6 @@ const transporter = nodemailer.createTransport({
   secure: process.env.NODE_ENV === "production",
 });
 
-console.log(process.env.EMAIL_SMTP_PORT);
-
 async function send(mailOptions) {
   await transporter.sendMail(mailOptions);
 }
