@@ -4,6 +4,10 @@ import user from "models/user.js";
 import sessions from "models/sessions.js";
 
 const router = createRouter();
+router.use(controller.injectAnonymousOrUser);
+router.get(controller.canRequest("read:session"), getHandler);
+
+export default router.handler(controller.errorHandlers);
 
 async function getHandler(request, response) {
   const sessionToken = request.cookies.session_id;
@@ -20,7 +24,3 @@ async function getHandler(request, response) {
   );
   return response.status(200).json(userFound);
 }
-
-router.get(getHandler);
-
-export default router.handler(controller.errorHandlers);
