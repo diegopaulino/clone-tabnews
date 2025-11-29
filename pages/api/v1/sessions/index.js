@@ -5,6 +5,10 @@ import session from "models/sessions.js";
 
 const router = createRouter();
 
+router.use(controller.injectAnonymousOrUser);
+router.post(controller.canRequest("create:session"), postHandler);
+router.delete(deleteHandler);
+
 async function postHandler(request, response) {
   const userInputValues = request.body;
 
@@ -28,8 +32,5 @@ async function deleteHandler(request, response) {
   controller.clearSessionCookie(response);
   return response.status(200).json(expiredSession);
 }
-
-router.post(postHandler);
-router.delete(deleteHandler);
 
 export default router.handler(controller.errorHandlers);
